@@ -1,14 +1,19 @@
 // app/(tabs)/index.tsx
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, SafeAreaView,
-  TouchableOpacity, RefreshControl,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors, Radius, Spacing, SUBJECTS, Typography } from '../../constants/theme';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import { performanceRepository, DesempenhoItem, StreakData } from '../../database/repositories/performanceRepository';
-import { Colors, Spacing, Typography, Radius, SUBJECTS } from '../../constants/theme';
+import { DesempenhoItem, performanceRepository, StreakData } from '../../database/repositories/performanceRepository';
 
 export default function HomeScreen() {
   const { user } = useAuth();

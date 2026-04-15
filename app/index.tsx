@@ -13,7 +13,7 @@ export default function Index() {
     if (isLoading) return;
     if (isFirstAccess) {
       router.replace('/(auth)/create-pin');
-    } else if (isAuthenticated) {
+    } else if (!isAuthenticated) {
       router.replace('/(tabs)');
     } else {
       router.replace('/(auth)/lock');

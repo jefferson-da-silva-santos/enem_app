@@ -1,23 +1,23 @@
 // app/(tabs)/desempenho.tsx
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
+  ActivityIndicator,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  RefreshControl,
-  ActivityIndicator,
+  View,
 } from 'react-native';
+import { Colors, Radius, Spacing, SUBJECTS, Typography } from '../../constants/theme';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import {
-  performanceRepository,
   DesempenhoItem,
+  performanceRepository,
   StreakData,
 } from '../../database/repositories/performanceRepository';
-import { Colors, Spacing, Typography, Radius, SUBJECTS } from '../../constants/theme';
 
 type Period = '7d' | '30d' | 'all';
 

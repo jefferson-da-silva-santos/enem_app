@@ -1,8 +1,9 @@
 // app/(auth)/lock.tsx
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, SafeAreaView, Alert,
+  View, Text, StyleSheet, Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';

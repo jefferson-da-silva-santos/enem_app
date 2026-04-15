@@ -1,13 +1,14 @@
 // app/(tabs)/foco.tsx
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  View, Text, StyleSheet, SafeAreaView, TouchableOpacity,
+  View, Text, StyleSheet, TouchableOpacity,
   Animated, ScrollView,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { getDatabase } from '../../database/database';
 import { Colors, Spacing, Typography, Radius, SUBJECTS } from '../../constants/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TimerMode = 'pomodoro' | 'short_break' | 'long_break';
 

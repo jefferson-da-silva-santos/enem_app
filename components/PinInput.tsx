@@ -49,7 +49,7 @@ export default function PinInput({
       shake();
       setPin('');
     }
-  }, [error]);
+  }, [error, shake]); 
 
   const handleKey = useCallback((key: string) => {
     if (key === '') return;
