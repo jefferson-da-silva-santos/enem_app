@@ -64,7 +64,7 @@ export default function CreatePinScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.logo}>
             <Text style={styles.logoText}>E</Text>
@@ -88,18 +88,21 @@ export default function CreatePinScreen() {
           ))}
         </View>
 
-        {error && <Text style={styles.errorText}>{error}</Text>}
+        <View style={styles.errorContainer}>
+          {error && <Text style={styles.errorText}>{error}</Text>}
+        </View>
 
         <View style={styles.keypad}>
           {KEYS.map((key, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={[styles.key, key === "" && { opacity: 0 }]}
-              onPress={() => handleKey(key)}
-              disabled={key === "" || isLoading}
-            >
-              <Text style={[styles.keyText, { color: colors.text }]}>{key}</Text>
-            </TouchableOpacity>
+            <View key={idx} style={styles.keyWrapper}>
+              <TouchableOpacity
+                style={[styles.key, key === "" && { opacity: 0 }]}
+                onPress={() => handleKey(key)}
+                disabled={key === "" || isLoading}
+              >
+                <Text style={[styles.keyText, { color: colors.text }]}>{key}</Text>
+              </TouchableOpacity>
+            </View>
           ))}
         </View>
 
@@ -113,17 +116,45 @@ export default function CreatePinScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  container: { flexGrow: 1, alignItems: 'center', paddingHorizontal: Spacing.base, paddingTop: Spacing['3xl'] },
-  header: { alignItems: 'center', marginBottom: Spacing.xl },
+  container: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingHorizontal: Spacing.base,
+    paddingTop: Spacing.xl,
+    paddingBottom: Spacing.xl
+  },
+  header: { alignItems: 'center', marginBottom: Spacing.lg },
   logo: { width: 60, height: 60, borderRadius: 16, backgroundColor: Colors.primary, justifyContent: 'center', alignItems: 'center', marginBottom: Spacing.base },
   logoText: { color: '#fff', fontSize: 28, fontWeight: '900' },
   appName: { fontSize: Typography.fontSize['xl'], fontWeight: '800', marginBottom: Spacing.xs },
   tagline: { fontSize: Typography.fontSize.sm, textAlign: 'center' },
-  dotsRow: { flexDirection: 'row', gap: 15, marginVertical: Spacing.xl },
+  dotsRow: { flexDirection: 'row', gap: 12, marginVertical: Spacing.xl },
   dot: { width: 14, height: 14, borderRadius: 7, borderWidth: 2 },
-  errorText: { color: '#EF4444', marginBottom: Spacing.base, textAlign: 'center' },
-  keypad: { flexDirection: 'row', flexWrap: 'wrap', width: 280, gap: 12, justifyContent: 'center', marginBottom: Spacing.xl },
-  key: { width: 75, height: 75, borderRadius: 38, backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' },
+  errorContainer: { height: 20, marginBottom: Spacing.base },
+  errorText: { color: '#EF4444', fontSize: Typography.fontSize.xs, textAlign: 'center' },
+  keypad: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    maxWidth: 320,
+    justifyContent: 'center',
+    marginBottom: Spacing.xl
+  },
+  keyWrapper: {
+    width: '33.3%',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  key: {
+    width: '100%',
+    aspectRatio: 1, // Mantém o botão circular
+    maxWidth: 75,
+    borderRadius: 40,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   keyText: { fontSize: 24, fontWeight: '600' },
-  securityNote: { fontSize: Typography.fontSize.xs, textAlign: 'center' },
+  securityNote: { fontSize: Typography.fontSize.xs, textAlign: 'center', marginTop: 'auto' },
 });

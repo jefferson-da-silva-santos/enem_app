@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Vibration } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Vibration, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../context/AuthContext';
@@ -51,7 +51,7 @@ export default function ResetPinScreen() {
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.bg }]}>
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <TouchableOpacity style={styles.back} onPress={() => router.back()}>
           <Text style={[styles.backText, { color: Colors.primary }]}>← Voltar</Text>
         </TouchableOpacity>
@@ -79,37 +79,67 @@ export default function ResetPinScreen() {
           ))}
         </View>
 
-        {error && <Text style={styles.errorText}>{error}</Text>}
+        <View style={styles.errorContainer}>
+          {error && <Text style={styles.errorText}>{error}</Text>}
+        </View>
 
         <View style={styles.keypad}>
           {KEYS.map((key, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={[styles.key, key === "" && { opacity: 0 }]}
-              onPress={() => handleKey(key)}
-              disabled={key === ""}
-            >
-              <Text style={[styles.keyText, { color: colors.text }]}>{key}</Text>
-            </TouchableOpacity>
+            <View key={idx} style={styles.keyWrapper}>
+              <TouchableOpacity
+                style={[styles.key, key === "" && { opacity: 0 }]}
+                onPress={() => handleKey(key)}
+                disabled={key === ""}
+              >
+                <Text style={[styles.keyText, { color: colors.text }]}>{key}</Text>
+              </TouchableOpacity>
+            </View>
           ))}
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1 },
-  container: { flex: 1, alignItems: 'center', paddingHorizontal: Spacing.base, paddingTop: Spacing.xl },
+  container: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingHorizontal: Spacing.base,
+    paddingTop: Spacing.xl,
+    paddingBottom: Spacing.xl
+  },
   back: { alignSelf: 'flex-start', marginBottom: Spacing.xl },
   backText: { fontSize: Typography.fontSize.base, fontWeight: '600' },
   warning: { padding: Spacing.base, borderRadius: 12, marginBottom: Spacing.xl, width: '100%' },
   warningText: { color: '#B91C1C', fontSize: Typography.fontSize.sm, textAlign: 'center' },
   title: { fontSize: Typography.fontSize.lg, fontWeight: '700', marginBottom: Spacing.base },
-  dotsRow: { flexDirection: 'row', gap: 15, marginBottom: Spacing['2xl'] },
+  dotsRow: { flexDirection: 'row', gap: 12, marginBottom: Spacing.xl },
   dot: { width: 14, height: 14, borderRadius: 7, borderWidth: 2 },
-  errorText: { color: '#EF4444', marginBottom: Spacing.base },
-  keypad: { flexDirection: 'row', flexWrap: 'wrap', width: 280, gap: 12, justifyContent: 'center' },
-  key: { width: 75, height: 75, borderRadius: 38, backgroundColor: 'rgba(0,0,0,0.05)', alignItems: 'center', justifyContent: 'center' },
+  errorContainer: { height: 20, marginBottom: Spacing.base },
+  errorText: { color: '#EF4444', fontSize: Typography.fontSize.xs },
+  keypad: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: '100%',
+    maxWidth: 320,
+    justifyContent: 'center'
+  },
+  keyWrapper: {
+    width: '33.3%',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  key: {
+    width: '100%',
+    aspectRatio: 1,
+    maxWidth: 75,
+    borderRadius: 40,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   keyText: { fontSize: 24, fontWeight: '600' },
 });
